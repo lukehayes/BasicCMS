@@ -6,7 +6,5 @@ namespace Core;
  */
 class Controller
 {
-	function __construct() {
-		var_dump(__CLASS__);
-	}
+	public function __construct() {}
 }
