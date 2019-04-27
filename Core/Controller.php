@@ -14,6 +14,6 @@ class Controller
 	 * @return void
 	 */
 	public function render( $view ) {
-		// TODO
+		echo "Render View: " . $view;
 	}
 }
