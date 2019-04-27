@@ -1,0 +1,15 @@
+{
+    "name": "lukehayes/cms",
+    "authors": [
+        {
+            "name": "lukehayes",
+            "email": "lukepurplehayes@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload" : {
+    	"psr-4" : {
+    		"Core\\" : "Core/"
+    	}
+    }
+}
