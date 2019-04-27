@@ -2,7 +2,7 @@
 namespace Core;
 
 /**
- * Controller
+ * Base Controller that should be inherited
  */
 class Controller
 {
