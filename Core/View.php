@@ -16,7 +16,7 @@ class View
 	 * Data to be used on each page
 	 * @var array
 	 */
-	private $pageData = [];
+	private $data = [];
 
 	/**
 	 * Path to load the templates from
