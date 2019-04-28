@@ -11,7 +11,7 @@ class Controller
 	 * View object tied to the controller
 	 * @var [type]
 	 */
-	private $view - null;
+	private $view = null;
 
 	public function __construct() {}
 
