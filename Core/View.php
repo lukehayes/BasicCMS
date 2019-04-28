@@ -13,6 +13,12 @@ class View
 	private $template = null;
 
 	/**
+	 * Data to be used on each page
+	 * @var array
+	 */
+	private $pageData = [];
+
+	/**
 	 * Path to load the templates from
 	 * @var string | null
 	 */
