@@ -1,4 +1,10 @@
 <?php 
 require 'vendor/autoload.php';
 
-$c = new Core\Controller();
+use Core\Controller;
+use Core\View;
+
+$c = new Controller();
+$v = new View("index");
+
+$v->render();
