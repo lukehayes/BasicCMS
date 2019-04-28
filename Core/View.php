@@ -51,7 +51,7 @@ class View
 	 * @return void
 	 */
 	public function render() {
-		echo "Render View: " . $view;
+		echo "Render View: " . $this->template;
 	}
 }
 
