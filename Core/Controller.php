@@ -23,14 +23,4 @@ class Controller
 	private function loadView(View $view) {
 		$this->view - $view;
 	}
-
-
-	/**
-	 * Render a view
-	 * @param  $view $view The view to be rendered
-	 * @return void
-	 */
-	public function render() {
-		echo "Render View: " . $view;
-	}
 }

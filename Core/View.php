@@ -44,5 +44,14 @@ class View
 	public function getTemplatePath() : string {
 		return $this->templatePath;
 	}
+	
+	/**
+	 * Render a view
+	 * @param  $view $view The view to be rendered
+	 * @return void
+	 */
+	public function render() {
+		echo "Render View: " . $view;
+	}
 }
 
