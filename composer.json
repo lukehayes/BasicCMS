@@ -6,7 +6,9 @@
             "email": "lukepurplehayes@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "symfony/var-dumper": "^5.0"
+    },
     "autoload" : {
     	"psr-4" : {
     		"Core\\" : "Core/",
