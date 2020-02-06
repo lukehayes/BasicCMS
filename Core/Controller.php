@@ -21,6 +21,6 @@ class Controller
 	 * @return void
 	 */
 	private function loadView(View $view) {
-		$this->view - $view;
+		$this->view = $view;
 	}
 }
