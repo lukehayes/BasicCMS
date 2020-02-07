@@ -13,6 +13,7 @@ class App {
 	 * @return 
 	 */
 	static function run() {
+        echo "Running Application...";
 	}
 }
 
