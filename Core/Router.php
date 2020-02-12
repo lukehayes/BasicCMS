@@ -5,7 +5,10 @@ class Router {
 
     private $routes = [];
 
-    public function __construct(){}
+    public function __construct(){
+        $this->routes['get'] = [];
+        $this->routes['post'] = [];
+    }
 
     /**
      * Add a get route to the router
