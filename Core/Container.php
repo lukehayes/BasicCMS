@@ -19,6 +19,8 @@ class Container {
      * Get a service from the container
      */
     public function get($service_name) {
+        $service = $this->services[$service_name];
+        dump($service::class);
         return $this->services[$service_name] ?? "Not Found";
     }
 }
