@@ -1,6 +1,8 @@
 <?php
 namespace Core;
 
+use Core\Exception\ServiceNotFoundException;
+
 /**
  * Simple service container to the application
  */
@@ -17,10 +19,18 @@ class Container {
 
     /**
      * Get a service from the container
+     * 
+     * @throws ServiceNotFoundException
      */
     public function get($service_name) {
+
         $service = $this->services[$service_name];
-        dump($service::class);
+
+        if( ! $service ) {
+            throw new ServiceNotFoundException("Service could not be found.");
+        }
+
+
         return $this->services[$service_name] ?? "Not Found";
     }
 }
