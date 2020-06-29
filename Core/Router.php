@@ -1,58 +1,146 @@
 <?php
 namespace Core;
 
+/**
+ * Router class that deals with routing all of the
+ * get and post request inside the framework
+ *
+ * @package Core\Routing
+ */
+
 class Router {
-
-    private $routes = [];
-
-    public function __construct(){
-        $this->routes['get'] = [];
-        $this->routes['post'] = [];
-    }
-
+    
     /**
-     * Add a GET route to the router
-     *
-     * @param $path The endpoint for a GET request
-     * @param $controller The name of the controller
-     *
-     * @return bool False if path already exists, True otheriwse
+     * Controller namespace
      */
-    public function get($path, $controller) : bool {
-        if( array_key_exists($path, $this->routes['get'])) {
-            return false;
-        }else {
-            $this->routes['get'][$path] = $controller;
-            return true;
-        }
-    }
+    const CONTROLLER_NS = "Controllers";
 
+    private $routes = [
+        'GET' => [],
+        'POST' => [],
+    ];
+
+    public function __construct() {}
+    
     /**
-     * Add a POST route to the router
+     * Return the $_SERVER['REQUEST_URI'] array value
      *
-     * @param $path The endpoint for a POST request
-     * @param $controller The name of the controller
-     *
-     * @return bool False if path already exists, True otheriwse
+     * @return string
      */
-    public function post($path, $controller) : bool {
-        if( array_key_exists($path, $this->routes['post'])) {
-            return false;
-        }else {
-            $this->routes['post'][$path] = $controller;
-            return true;
-        }
+    private function getUri() : string {
+        return $_SERVER['REQUEST_URI'] ?? "/";
     }
-
+    
     /**
-     * Routes array getter
+     * Get the REQUEST_METHOD from $_SERVER array
      *
      * @return array
      */
-    public function getRoutes() : array {
-        return $this->routes;
+    private function getRequestMethod() : string {
+        return  $_SERVER['REQUEST_METHOD'];
     }
 
+    /**
+     * Split the current REQUEST_URI into controller
+     * and action components
+     *
+     * @return array
+     */
+    private function getUriPieces() : array {
+        return explode("/", $_SERVER['REQUEST_URI']);
+    }
+
+    
+    /**
+     * Get all of the routes for GET or POST
+     *
+     * @param string $method GET or POST
+     *
+     * @return array | boolean
+     */
+    public function routes($method='') {
+
+        $method = strtoupper($method);
+
+        if(empty($method) && isset($method)) {
+            return $this->routes;
+        }else if( $method == 'GET' || $method == 'POST' ) {
+            return $this->routes[$method];
+        }else {
+            return false;
+        }
+    }
+    
+    /**
+     * Add a GET uri endpoint to the router
+     *
+     * @param $uri The uri endpoint
+     * @param $controller The name of the controller
+     * @param $action The name of the action to use inside the controller
+     *
+     * @return bool
+     */
+    public function get($uri, $controller, $action) {
+
+        if( array_key_exists($uri, $this->routes['GET']) ) {
+            return false;
+        }else {
+            $this->routes['GET'][$uri] = [
+                'controller' => $controller,
+                'action' => $action,
+            ];
+            return true;
+        }
+    }
+    
+    /**
+     * Add a POST uri endpoint to the router
+     *
+     * @param $uri The uri endpoint
+     * @param $controller The name of the controller
+     * @param $action The name of the action to use inside the controller
+     *
+     * @return bool
+     */
+    public function post($uri, $controller, $action) {
+
+        if( array_key_exists($uri, $this->routes['POST']) ) {
+            return false;
+        }else {
+            $this->routes['POST'][$uri] = [
+                'controller' => $controller,
+                'action' => $action,
+            ];
+            return true;
+        }
+    }
+    
+    /**
+     * Resolve the corrected controller and action
+     *
+     * @return void
+     */
+    public function resolve() : void {
+
+        $uri = $this->getUri();
+        $method = $this->getRequestMethod();
+        
+        // If the current URI doesn't exist in the routes array
+        // then we load the error controller and return
+        if(! array_key_exists($uri, $this->routes[$method])) {
+            $controller = self::CONTROLLER_NS . "\\" . "ErrorController";
+            $controller = new $controller();
+            $controller->index();
+            return;
+        }
+
+        $route = $this->routes[$method][$uri];
+        $controller = $route['controller'];
+        $action = $route['action'];
+
+        $controller = self::CONTROLLER_NS . "\\" . $route['controller'];
+        $controller = new $controller();
+        $controller->$action();
+    }
 }
 
-?>
