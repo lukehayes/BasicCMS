@@ -6,7 +6,7 @@ use Core\Exception\ServiceNotFoundException;
 /**
  * Simple service container to the application
  */
-class Container {
+class ServiceContainer {
 
     private $services = [];
     
