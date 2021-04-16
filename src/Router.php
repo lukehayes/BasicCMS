@@ -1,6 +1,8 @@
 <?php
 namespace Core;
 
+use Core\Exception\ActionNotFoundException;
+
 /**
  * Router class that deals with routing all of the
  * get and post request inside the framework
@@ -118,6 +120,8 @@ class Router {
     /**
      * Resolve the corrected controller and action
      *
+     * @throws ActionNotFoundException
+     *
      * @return void
      */
     public function resolve() : void {
@@ -140,7 +144,14 @@ class Router {
 
         $controller = self::CONTROLLER_NS . "\\" . $route['controller'];
         $controller = new $controller();
-        $controller->$action();
+
+        if (!method_exists($controller, $action)) {
+            throw ActionNotFoundException();
+        } else
+        {
+            $controller->$action();
+        }
+
     }
 }
 
