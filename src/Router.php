@@ -13,7 +13,7 @@ class Router {
     /**
      * Controller namespace
      */
-    const CONTROLLER_NS = "Controllers";
+    const CONTROLLER_NS = "App\Controllers";
 
     private $routes = [
         'GET' => [],
