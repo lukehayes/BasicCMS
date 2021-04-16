@@ -11,7 +11,7 @@ use Core\Exception\ActionNotFoundException;
  */
 
 class Router {
-    
+
     /**
      * Controller namespace
      */
@@ -23,16 +23,16 @@ class Router {
     ];
 
     public function __construct() {}
-    
+
     /**
      * Return the $_SERVER['REQUEST_URI'] array value
      *
      * @return string
      */
-    private function getUri() : string {
-        return $_SERVER['REQUEST_URI'] ?? "/";
-    }
-    
+        private function getUri() : string {
+            return $_SERVER['REQUEST_URI'] ?? "/";
+        }
+
     /**
      * Get the REQUEST_METHOD from $_SERVER array
      *
@@ -52,7 +52,7 @@ class Router {
         return explode("/", $_SERVER['REQUEST_URI']);
     }
 
-    
+
     /**
      * Get all of the routes for GET or POST
      *
@@ -72,7 +72,7 @@ class Router {
             return false;
         }
     }
-    
+
     /**
      * Add a GET uri endpoint to the router
      *
@@ -94,7 +94,7 @@ class Router {
             return true;
         }
     }
-    
+
     /**
      * Add a POST uri endpoint to the router
      *
@@ -116,7 +116,7 @@ class Router {
             return true;
         }
     }
-    
+
     /**
      * Resolve the corrected controller and action
      *
@@ -128,13 +128,11 @@ class Router {
 
         $uri = $this->getUri();
         $method = $this->getRequestMethod();
-        
+
         // If the current URI doesn't exist in the routes array
         // then we load the error controller and return
         if(! array_key_exists($uri, $this->routes[$method])) {
-            $controller = self::CONTROLLER_NS . "\\" . "ErrorController";
-            $controller = new $controller();
-            $controller->index();
+            $this->resolveErrorController();
             return;
         }
 
@@ -146,12 +144,24 @@ class Router {
         $controller = new $controller();
 
         if (!method_exists($controller, $action)) {
-            throw ActionNotFoundException();
+            throw new ActionNotFoundException("The action {$action} does not exist on {$controller} object.");
         } else
         {
             $controller->$action();
         }
+    }
 
+    /**
+     * Resolve the name of the ErrorController class and 
+     * call the index method of that object.
+     *
+     * @return void
+     */
+    public function resolveErrorController() : void
+    {
+        $controller = self::CONTROLLER_NS . "\\" . "ErrorController";
+        $controller = new $controller();
+        $controller->index();
     }
 }
 
