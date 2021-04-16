@@ -8,8 +8,8 @@ use Core\Controller;
  */
 class ErrorController extends Controller
 {
-    public function index()
+    public function index(string $error="404.")
     {
-        echo "Error on CLASS:" . __CLASS__;
+        echo $error;
     }
 }
