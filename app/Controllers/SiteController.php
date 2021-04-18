@@ -8,4 +8,8 @@ use Core\Controller;
  */
 class SiteController extends Controller
 {
+    public function index()
+    {
+        dump(__CLASS__);
+    }
 }
