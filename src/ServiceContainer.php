@@ -23,20 +23,24 @@ class ServiceContainer {
     }
 
     /**
-     * Get a service from the container
+     * Get a service from the container.
      * 
-     * @throws ServiceNotFoundException
+     * @param string $name  Name of the service to be retrieved. 
+     *
+     * @throws ServiceNotFoundException Thrown if $name is not
+     * available inside the container.
+     *
+     * @return void.
      */
-    public function get($service_name) {
+    public function get(string $name) {
 
-        $service = $this->services[$service_name];
+        $service = $this->services[$name];
 
         if( ! $service ) {
             throw new ServiceNotFoundException("Service could not be found.");
         }
 
-
-        return $this->services[$service_name] ?? "Not Found";
+        return $this->services[$name] ?? "Not Found";
     }
 }
 
