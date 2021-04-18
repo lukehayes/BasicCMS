@@ -11,10 +11,15 @@ class ServiceContainer {
     private $services = [];
     
     /**
-     * Make a service available to the container
+     * Make a service available inside the container.
+     *
+     * @param string $name  Name of the service to be bound. 
+     * @param object $class Class to be added into the container.
+     *
+     * @return void.
      */
-    public function bind($service_name, $class_binding) {
-        $this->services[$service_name] = [$service_name => $class_binding];
+    public function bind(string $name, object $class) {
+        $this->services[$name] = [$name => $class];
     }
 
     /**
