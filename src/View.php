@@ -2,24 +2,27 @@
 namespace Core; 
 
 /**
- * View class
+ * A View class manages template files to be loaded from controllers.
  */
 class View
 {
 	/**
-	 * Name of template to load
+	 * The file name of the template to be loaded.
+     *
 	 * @var string | null
 	 */
 	private $template = null;
 
 	/**
-	 * Data to be used on each page
+	 * Data variables to be used in the view template.
+     *
 	 * @var array
 	 */
 	private $data = [];
 
 	/**
-	 * Path to load the templates from
+	 * Path from where templates are loaded.
+     *
 	 * @var string | null
 	 */
 	private $templatePath = null;
@@ -30,15 +33,17 @@ class View
 	}
 
 	/**
-	 * Get the name of the current view template
-	 * @return string Name of the template
+	 * Get the name of the current view template.
+     *
+	 * @return string Name of the template.
 	 */
 	public function getTemplateString() : string {
 		return $this->template;
 	}
 
 	/**
-	 * Template Path Getter
+	 * Template path getter.
+     *
 	 * @return string
 	 */
 	public function getTemplatePath() : string {
@@ -46,8 +51,8 @@ class View
 	}
 	
 	/**
-	 * Render a view
-	 * @param  $view $view The view to be rendered
+	 * Render a view template.
+     *
 	 * @return void
 	 */
 	public function render() {
