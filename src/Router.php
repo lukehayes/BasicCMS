@@ -9,7 +9,6 @@ use Core\Exception\ActionNotFoundException;
  *
  * @package Core\Routing
  */
-
 class Router {
 
     /**
@@ -17,18 +16,34 @@ class Router {
      */
     const CONTROLLER_NS = "App\Controllers";
 
+    /**
+     * Predefined routes that are available from the start. Will abstract
+     * these into a class or YAML file in the future.
+     */
     private $routes = [
-        'GET' => [],
-        'POST' => [],
-    ];
+        'GET' => [
+
+            '/' => [ 'path' => '/',  
+                     "controller" => 'SiteController', 
+                     "action" => 'index'
+                 ],
+
+            '/hello' => [ 'path' => '/hello',  
+                     "controller" => 'SiteController', 
+                     "action" => 'hello'
+                 ],
+
+            'POST' => [],
+        ]];
+
 
     public function __construct() {}
 
-    /**
-     * Return the $_SERVER['REQUEST_URI'] array value
-     *
-     * @return string
-     */
+        /**
+         * Return the $_SERVER['REQUEST_URI'] array value
+         *
+         * @return string
+         */
         private function getUri() : string {
             return $_SERVER['REQUEST_URI'] ?? "/";
         }
@@ -129,6 +144,8 @@ class Router {
         $uri = $this->getUri();
         $method = $this->getRequestMethod();
 
+        dump($this->routes);
+
         // If the current URI doesn't exist in the routes array
         // then we load the error controller and return
         if(! array_key_exists($uri, $this->routes[$method])) {
@@ -143,8 +160,8 @@ class Router {
         $controller = self::CONTROLLER_NS . "\\" . $route['controller'];
         $controller = new $controller();
 
-        if (!method_exists($controller, $action)) {
-            throw new ActionNotFoundException("The action {$action} does not exist on {$controller} object.");
+        if (!method_exists($controller::class, $action)) {
+            throw new ActionNotFoundException($action, $controller);
         } else
         {
             $controller->$action();
