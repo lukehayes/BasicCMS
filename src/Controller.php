@@ -2,22 +2,26 @@
 namespace Core;
 
 /**
- * Base Controller that should be inherited
+ * Base Controller that all controllers should inherit from.
+ *
+ * @package Core
  */
 class Controller
 {
-
 	/**
-	 * View object tied to the controller
-	 * @var [type]
+	 * View object tied to the controller object.
+     *
+	 * @var View
 	 */
 	private $view = null;
 
 	public function __construct() {}
 
 	/**
-	 * Load a View into the controller
-	 * @param  View   $view The view to load
+	 * Load a View instance into the controller class.
+     *
+	 * @param View $view The view to load
+     *
 	 * @return void
 	 */
 	private function loadView(View $view) {
