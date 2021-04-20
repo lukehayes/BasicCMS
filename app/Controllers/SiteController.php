@@ -10,6 +10,6 @@ class SiteController extends Controller
 {
     public function index()
     {
-        dump(__CLASS__);
+        $this->view->render("index");
     }
 }
