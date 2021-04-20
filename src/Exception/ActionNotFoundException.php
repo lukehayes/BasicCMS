@@ -16,6 +16,6 @@ class ActionNotFoundException extends \Exception {
      */
     public function __construct(string $action) {
         parent::__construct();
-        $this->message = "The action $action does not exists.";
+        $this->message = "The action <strong>$action</strong> does not exists.";
     }
 }
