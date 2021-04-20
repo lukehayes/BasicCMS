@@ -10,6 +10,6 @@ class ErrorController extends Controller
 {
     public function index(string $error="404.")
     {
-        echo $error;
+        $this->view->render("error/404");
     }
 }
