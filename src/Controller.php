@@ -1,6 +1,8 @@
 <?php 
 namespace Core;
 
+use Core\View;
+
 /**
  * Base Controller that all controllers should inherit from.
  *
@@ -13,9 +15,12 @@ class Controller
      *
 	 * @var View
 	 */
-	private $view = null;
+	protected $view = null;
 
-	public function __construct() {}
+    public function __construct() 
+    {
+        $this->view = new View('index');
+    }
 
 	/**
 	 * Load a View instance into the controller class.
