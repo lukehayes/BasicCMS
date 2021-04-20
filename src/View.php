@@ -53,10 +53,14 @@ class View
 	/**
 	 * Render a view template.
      *
+	 * @param string The name of the template file minus the ".php" extension.
+     *
 	 * @return void
 	 */
-	public function render() {
-		include_once "$this->templatePath/$this->template.php";
+	public function render(string $template) {
+		include_once "$this->templatePath/base-header.php";
+		include_once "$this->templatePath/$template.php";
+		include_once "$this->templatePath/base-footer.php";
 	}
 }
 
