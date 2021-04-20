@@ -2,6 +2,7 @@
 namespace Core;
 
 use Core\Exception\ActionNotFoundException;
+use Core\Route;
 
 /**
  * Router class that deals with routing all of the
@@ -20,33 +21,27 @@ class Router {
      * Predefined routes that are available from the start. Will abstract
      * these into a class or YAML file in the future.
      */
-    private $routes = [
-        'GET' => [
+    private $routes = [];
 
-            '/' => [ 'path' => '/',  
-                     "controller" => 'SiteController', 
-                     "action" => 'index'
-                 ],
+    public function __construct() {
+        $this->routes = [
+            'GET' => [
+                '/'      => new Route("/", "SiteController", "index"),
+                '/hello' => new Route("/hello", "SiteController", "hello"),
+            ],
 
-            '/hello' => [ 'path' => '/hello',  
-                     "controller" => 'SiteController', 
-                     "action" => 'hello'
-                 ],
+            'POST'   => [],
+        ];
+    }
 
-            'POST' => [],
-        ]];
-
-
-    public function __construct() {}
-
-        /**
-         * Return the $_SERVER['REQUEST_URI'] array value
-         *
-         * @return string
-         */
-        private function getUri() : string {
-            return $_SERVER['REQUEST_URI'] ?? "/";
-        }
+    /**
+     * Return the $_SERVER['REQUEST_URI'] array value
+     *
+     * @return string
+     */
+    private function getUri() : string {
+        return $_SERVER['REQUEST_URI'] ?? "/";
+    }
 
     /**
      * Get the REQUEST_METHOD from $_SERVER array
@@ -144,8 +139,6 @@ class Router {
         $uri = $this->getUri();
         $method = $this->getRequestMethod();
 
-        dump($this->routes);
-
         // If the current URI doesn't exist in the routes array
         // then we load the error controller and return
         if(! array_key_exists($uri, $this->routes[$method])) {
@@ -154,10 +147,10 @@ class Router {
         }
 
         $route = $this->routes[$method][$uri];
-        $controller = $route['controller'];
-        $action = $route['action'];
+        $controller = $route->controller;
+        $action = $route->action;
 
-        $controller = self::CONTROLLER_NS . "\\" . $route['controller'];
+        $controller = self::CONTROLLER_NS . "\\" . $controller;
         $controller = new $controller();
 
         if (!method_exists($controller::class, $action)) {
