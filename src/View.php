@@ -56,7 +56,7 @@ class View
 	 * @return void
 	 */
 	public function render() {
-		echo "Render View: " . $this->template;
+		include_once "$this->templatePath/$this->template.php";
 	}
 }
 
