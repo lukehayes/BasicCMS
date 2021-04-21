@@ -27,8 +27,7 @@ class View
 	 */
 	private $templatePath = null;
 
-	function __construct( $template ) {
-		$this->template = $template;
+	function __construct() {
 		$this->templatePath = "templates";
 	}
 
