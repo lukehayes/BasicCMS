@@ -63,5 +63,20 @@ class View
 		include_once "$this->templatePath/$template.php";
 		include_once "$this->templatePath/base-footer.php";
 	}
+	
+	/**
+	 * Render a error view template.
+     *
+	 * @param string The name of the template file minus the ".php" extension.
+	 * @param array  The data that should be made available inside the template.
+     *
+	 * @return void
+	 */
+	public function renderError(string $template, $data = []) {
+        extract($data);
+		include_once "$this->templatePath/error/error-header.php";
+		include_once "$this->templatePath/error/$template.php";
+		include_once "$this->templatePath/error/error-footer.php";
+	}
 }
 
