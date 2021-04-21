@@ -2,6 +2,7 @@
 namespace Core;
 
 use Core\View;
+use Core\Request;
 
 /**
  * Base Controller that all controllers should inherit from.
