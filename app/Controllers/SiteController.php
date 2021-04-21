@@ -26,4 +26,9 @@ class SiteController extends Controller
 
         $this->view->render("index", array_merge($this->data, $data));
     }
+
+    public function login()
+    {
+        $this->view->render("form/login", array_merge($this->data, $data));
+    }
 }

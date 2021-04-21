@@ -34,9 +34,12 @@ class Router {
             'GET' => [
                 '/'      => new Route("/", "SiteController", "index"),
                 '/hello' => new Route("/hello", "SiteController", "hello"),
+                '/login' => new Route("/login", "SiteController", "login"),
             ],
 
-            'POST'   => [],
+            'POST'   => [
+                '/login' => new Route("/login", "LoginController", "process"),
+            ],
         ];
     }
 
@@ -113,8 +116,6 @@ class Router {
      * @return void
      */
     public function resolve() : void {
-
-        dump($this->request);
 
         $uri = $this->request->getRequestUri();
         $method = $this->request->getRequestMethod();
