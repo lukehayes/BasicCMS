@@ -58,6 +58,7 @@ class View
 	 * @return void
 	 */
 	public function render(string $template, $data = []) {
+        extract($data);
 		include_once "$this->templatePath/base-header.php";
 		include_once "$this->templatePath/$template.php";
 		include_once "$this->templatePath/base-footer.php";
