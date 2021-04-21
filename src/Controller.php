@@ -20,6 +20,12 @@ class Controller
     public function __construct() 
     {
         $this->view = new View();
+
+        // Site wide page variables that need to be
+        // available everywhere.
+        $this->data = [
+            'title' => 'CMS'
+        ];
     }
 
 	/**
