@@ -3,6 +3,7 @@ namespace Core;
 
 use Core\Exception\ActionNotFoundException;
 use Core\Route;
+use Core\Request;
 
 /**
  * Router class that deals with routing all of the
@@ -23,7 +24,12 @@ class Router {
      */
     private $routes = [];
 
+    private $request = null;
+
     public function __construct() {
+
+        $this->request = new Request();
+
         $this->routes = [
             'GET' => [
                 '/'      => new Route("/", "SiteController", "index"),
@@ -32,34 +38,6 @@ class Router {
 
             'POST'   => [],
         ];
-    }
-
-    /**
-     * Return the $_SERVER['REQUEST_URI'] array value
-     *
-     * @return string
-     */
-    private function getUri() : string {
-        return $_SERVER['REQUEST_URI'] ?? "/";
-    }
-
-    /**
-     * Get the REQUEST_METHOD from $_SERVER array
-     *
-     * @return array
-     */
-    private function getRequestMethod() : string {
-        return  $_SERVER['REQUEST_METHOD'];
-    }
-
-    /**
-     * Split the current REQUEST_URI into controller
-     * and action components
-     *
-     * @return array
-     */
-    private function getUriPieces() : array {
-        return explode("/", $_SERVER['REQUEST_URI']);
     }
 
 
@@ -136,8 +114,10 @@ class Router {
      */
     public function resolve() : void {
 
-        $uri = $this->getUri();
-        $method = $this->getRequestMethod();
+        dump($this->request);
+
+        $uri = $this->request->getRequestUri();
+        $method = $this->request->getRequestMethod();
 
         // If the current URI doesn't exist in the routes array
         // then we load the error controller and return
