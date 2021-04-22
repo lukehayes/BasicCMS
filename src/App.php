@@ -23,11 +23,10 @@ class App {
     }
 
 	/**
-	 * Run the application
-	 * @return 
+	 * Application entry point starts here.
 	 */
-	static function run() {
-        echo "Running Application...";
+	public function run() {
+        $this->router->resolve();
 	}
 }
 
