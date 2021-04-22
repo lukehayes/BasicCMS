@@ -4,6 +4,9 @@ namespace Core;
 use Core\Exception\ActionNotFoundException;
 use Core\Route;
 use Core\Request;
+use App\Controllers\SiteController;
+use App\Controllers\LoginController;
+use App\Controllers\ErrorController;
 
 /**
  * Router class that deals with routing all of the
@@ -12,11 +15,6 @@ use Core\Request;
  * @package Core\Routing
  */
 class Router {
-
-    /**
-     * Controller namespace
-     */
-    const CONTROLLER_NS = "App\Controllers";
 
     /**
      * Predefined routes that are available from the start. Will abstract
@@ -32,13 +30,13 @@ class Router {
 
         $this->routes = [
             'GET' => [
-                '/'      => new Route("/", "SiteController", "index"),
-                '/hello' => new Route("/hello", "SiteController", "hello"),
-                '/login' => new Route("/login", "SiteController", "login"),
+                '/'      => new Route("/", SiteController::class, "index"),
+                '/hello' => new Route("/hello", SiteController::class, "hello"),
+                '/login' => new Route("/login", SiteController::class, "login"),
             ],
 
             'POST'   => [
-                '/login' => new Route("/login", "LoginController", "process"),
+                '/login' => new Route("/login", LoginController::class, "process"),
             ],
         ];
     }
@@ -128,13 +126,10 @@ class Router {
         }
 
         $route = $this->routes[$method][$uri];
-        $controller = $route->controller;
+        $controller = new $route->controller;
         $action = $route->action;
 
-        $controller = self::CONTROLLER_NS . "\\" . $controller;
-        $controller = new $controller();
-
-        if (!method_exists($controller::class, $action)) {
+        if (!method_exists($controller, $action)) {
             throw new ActionNotFoundException($action, $controller);
         } else
         {
@@ -150,8 +145,7 @@ class Router {
      */
     public function resolveErrorController() : void
     {
-        $controller = self::CONTROLLER_NS . "\\" . "ErrorController";
-        $controller = new $controller();
+        $controller = new ErrorController();
         $controller->index();
     }
 }
