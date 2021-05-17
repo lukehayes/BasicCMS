@@ -25,20 +25,8 @@ class Router {
     private $request = null;
 
     public function __construct() {
-
         $this->request = new Request();
-
-        $this->routes = [
-            'GET' => [
-                '/'      => new Route("/", SiteController::class, "index"),
-                '/hello' => new Route("/hello", SiteController::class, "hello"),
-                '/login' => new Route("/login", SiteController::class, "login"),
-            ],
-
-            'POST'   => [
-                '/login' => new Route("/login", LoginController::class, "process"),
-            ],
-        ];
+        $this->routes = include getcwd() . "/routes.php";
     }
 
 
