@@ -1,5 +1,5 @@
 <?php 
-namespace Core\Controllers; 
+namespace Core; 
 
 use Core\Controller;
 

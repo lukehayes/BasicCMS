@@ -4,7 +4,7 @@ namespace Core;
 use Core\Exception\ActionNotFoundException;
 use Core\Route;
 use Core\Request;
-use App\Controllers\ErrorController;
+use Core\ErrorController;
 
 /**
  * Router class that deals with routing all of the
