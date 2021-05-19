@@ -91,5 +91,18 @@ class View
 		include_once "$this->templatePath/error/$template.php";
 		include_once "$this->templatePath/error/error-footer.php";
 	}
+
+	/**
+	 * Check if a template files exists.
+     *
+	 * @param string The name of the template file.
+     *
+	 * @return void.
+	 */
+    private function templateExists(string $filename) : bool
+    {
+		return file_exists("$this->templatePath/{$filename}.php");
+    }
+
 }
 
