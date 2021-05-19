@@ -63,6 +63,19 @@ class View
 		include_once "$this->templatePath/$template.php";
 		include_once "$this->templatePath/base-footer.php";
 	}
+
+	/**
+	 * Render a form template.
+     *
+	 * @param string The name of the template file minus the ".php" extension.
+	 * @param array  The data that should be made available inside the template.
+     *
+	 * @return void
+	 */
+	public function renderForm(string $formTemplate, $data = []) {
+        extract($data);
+		include_once "$this->templatePath/form/{$formTemplate}.php";
+	}
 	
 	/**
 	 * Render a error view template.
