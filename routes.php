@@ -1,5 +1,9 @@
 <?php
 use Core\Route;
+
+use App\Controllers\SiteController;
+use App\Controllers\LoginController;
+
 /**
  * Routes for most of the application are stored here.
  */
